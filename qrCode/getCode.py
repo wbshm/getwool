@@ -9,8 +9,8 @@ import os
 from PIL import Image
 
 if __name__ == '__main__':
-    rootdir = './test/'
-    listDir = os.listdir('./test/')
+    rootdir = './ver/'
+    listDir = os.listdir(rootdir)
     for i in range(0, len(listDir)):
         target = os.path.join(rootdir, listDir[i])
         if os.path.isfile(target) and target.split('.')[-1] == 'png':

@@ -57,7 +57,7 @@ class Token(object):
 class Phone(object):
     _FILE_PATH = './data/account.csv'
     _SPLIT_STR = '|'
-    tableHead = ['phone', 'platform', 'update_time']
+    tableHead = ['phone', 'platform', 'update_time','info']
     tableObj = object
 
     def __init__(self):
@@ -80,7 +80,7 @@ class Phone(object):
         index = self.get_index_by_phone(data['phone'])
         if index != -1:
             del self.tableObj[index]
-        self.add_data(data, tags)
+        self.add_data(data, tags=tags)
         self._write_data()
 
     def add_data(self, data, tags=None):
@@ -92,7 +92,7 @@ class Phone(object):
         if tags is None:
             tags = list()
         data['platform'] = self._SPLIT_STR.join(data['platform'])
-        self.tableObj.append([x for x in data.values()], tags=[tags])
+        self.tableObj.append([x for x in data.values()], tags=tags)
         pass
 
     def update_data(self, row, data, tags):

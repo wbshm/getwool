@@ -1,7 +1,7 @@
-import hashlib
+import datetime
 
 import requests
-import datetime
+
 from modal import account
 
 apiConfig = {
@@ -38,12 +38,12 @@ class Zanma(object):
             dba.save_data({'key': 'zanma', 'token': token, 'get_time': get_time()})
         return token
 
-    def get_phone_list(self):
+    def get_phone_list(self, num):
         request_url = 'http://120.79.206.192:9180/service.asmx/GetHM2Str'
         request_data = {
             'token': self.get_access_token(),  # (登陆令牌)
             'xmid': '300217',  # (项目编码) 项目ID
-            'sl': '30',  # (取号数量)
+            'sl': num,  # (取号数量)
             'lx': 0,  # (号码类型)
             'a1': '',  # (省份)
             'a2': '',  # (城市)
@@ -53,7 +53,7 @@ class Zanma(object):
         }
         res = requests.get(request_url, params=request_data)
         if res.text[0:2] == 'hm':
-            return res.text[2:].split(",")
+            return res.text[3:].split(",")
         else:
             return res.text
 
@@ -63,11 +63,12 @@ class Zanma(object):
             'token': self.get_access_token(),
             'hm': phone
         }
-        requests.get(request_url, request_data)
+        res = requests.get(request_url, request_data)
+        return res.text
 
     def release_all(self):
-        requests.get('http://120.79.206.192:9180/service.asmx/sfAllStr', {'token': self.get_access_token()})
-        pass
+        res = requests.get('http://120.79.206.192:9180/service.asmx/sfAllStr', {'token': self.get_access_token()})
+        return res.text
 
     def add_black_list(self, phone):
         data = {

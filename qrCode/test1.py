@@ -66,6 +66,13 @@ def cut_noise(image):
     return image  # 返回修改后的图片
 
 
+def rotate(image):
+    rows, cols = image.size  # 图片的宽度和高度
+    for i in range(1, rows - 1):
+        for j in range(1, cols - 1):
+            pass
+
+
 # 识别图片中的数字加字母
 # 传入参数为图片路径，返回结果为：识别结果
 def OCR_lmj(img_path):
