@@ -1,6 +1,5 @@
 # noinspection PyInterpreter
-
-from contrl.hit_zanma import Zanma
+from contrl.hit_mf import mf
 from modal import account
 from contrl import mgk_api
 import datetime
@@ -17,15 +16,13 @@ if __name__ == '__main__':
     # print(a)
     # exit()
 
-    zanmaObj = Zanma()
+    mfObj = mf()
     accountDba = account.Phone()
-
-    # print(zanmaObj.release_all())
     while True:
-        zanmaObj.release_all()
-        phone_list = zanmaObj.get_phone_list(30)
+        mfObj.release_all()
+        phone_list = mfObj.get_phone_list(30)
+        platform = 'mf'
         print(phone_list)
-        platform = 'zanma'
         for phone in phone_list:
             if accountDba.get_index_by_phone(phone) == -1:
                 res = mgk_api.register(phone)
@@ -35,4 +32,5 @@ if __name__ == '__main__':
                     with open('access.txt', 'a') as f:
                         f.write(phone + ':' + platform+'\n')
                 accountDba.save_data({'phone': phone, 'platform': platform, 'update_time': get_time(), 'info': res})
-            zanmaObj.add_black_list(phone)
+            mfObj.add_black_list(phone)
+

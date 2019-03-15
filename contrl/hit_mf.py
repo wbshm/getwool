@@ -5,7 +5,7 @@ from modal import account
 
 apiConfig = {
     'zanma': {
-        'office': 'http://47.107.130.26:9000/index.html',
+        'office': 'http://mf-yzm.cn:9000/',
         'account': 'lucky',
         'password': 'a6823192'
     },
@@ -17,29 +17,33 @@ apiConfig = {
 }
 
 apiUrl = {
-    'getToken': {'name': 'getToken', 'url': 'http://120.79.206.192:9180/service.asmx/UserLoginStr',
+    'getToken': {'name': 'getToken', 'url': 'http://39.108.53.15:9180/service.asmx/UserLoginStr',
                  'param': ['name', 'psw'], 'method': 'post'}
 }
 
 
-class Zanma(object):
+class mf(object):
     def __del__(self):
         pass
 
     def get_access_token(self):
         dba = account.Token()
-        token = dba.get_data_by_key('zanma')
-        if token is None or len(token) < 30 or 1:
-            response = requests.get('http://120.79.206.192:9180/service.asmx/UserLoginStr',
-                                    params=self.get_params(['name', 'psw']))
-            token = response.text
-            dba.save_data({'key': 'zanma', 'token': token, 'get_time': get_time()})
-        else:
+        token = dba.get_data_by_key('mf')
+        params = {
+            'name': 'a6823192',
+            'psw': '6823192'
+        }
+        if token is not None:
             token = token['token']
+        else:
+            response = requests.get('http://39.108.53.15:9180/service.asmx/UserLoginStr',
+                                    params=params)
+            token = response.text
+            dba.save_data({'key': 'mf', 'token': token, 'get_time': get_time()})
         return token
 
     def get_phone_list(self, num):
-        request_url = 'http://120.79.206.192:9180/service.asmx/GetHM2Str'
+        request_url = 'http://39.108.53.15:9180/service.asmx/GetHM2Str'
         request_data = {
             'token': self.get_access_token(),  # (登陆令牌)
             'xmid': '300217',  # (项目编码) 项目ID
@@ -58,7 +62,7 @@ class Zanma(object):
             return res.text
 
     def release_phone(self, phone):
-        request_url = 'http://120.79.206.192:9180/service.asmx/sfHmStr'
+        request_url = 'http://39.108.53.15:9180/service.asmx/sfHmStr'
         request_data = {
             'token': self.get_access_token(),
             'hm': phone
@@ -67,7 +71,7 @@ class Zanma(object):
         return res.text
 
     def release_all(self):
-        res = requests.get('http://120.79.206.192:9180/service.asmx/sfAllStr', {'token': self.get_access_token()})
+        res = requests.get('http://39.108.53.15:9180/service.asmx/sfAllStr', {'token': self.get_access_token()})
         return res.text
 
     def add_black_list(self, phone):
@@ -77,7 +81,7 @@ class Zanma(object):
             'hm': phone,
             'sf': 1
         }
-        requests.get('http://120.79.206.192:9180/service.asmx/Hmd2Str', data)
+        requests.get('http://39.108.53.15:9180/service.asmx/Hmd2Str', data)
 
     def get_params(self, keys):
         params = {

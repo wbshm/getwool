@@ -3,10 +3,11 @@ import datetime
 import requests
 from modal import account
 
+xmid = 74475
 apiConfig = {
     'zanma': {
-        'office': 'http://47.107.130.26:9000/index.html',
-        'account': 'lucky',
+        'office': 'http://www.yika66.com/Web/Api.Aspx',
+        'account': '6823192',
         'password': 'a6823192'
     },
     'mifeng': {
@@ -22,20 +23,27 @@ apiUrl = {
 }
 
 
-class Zanma(object):
+class qwka(object):
     def __del__(self):
         pass
 
     def get_access_token(self):
         dba = account.Token()
         token = dba.get_data_by_key('zanma')
+        token = token['token']
+        params = {
+            'uName': 'a6823192',
+            'pWord': 'a6823192',
+            'Developer': '',
+            'code': 'utf8',
+        }
         if token is None or len(token) < 30 or 1:
-            response = requests.get('http://120.79.206.192:9180/service.asmx/UserLoginStr',
-                                    params=self.get_params(['name', 'psw']))
-            token = response.text
-            dba.save_data({'key': 'zanma', 'token': token, 'get_time': get_time()})
-        else:
-            token = token['token']
+            response = requests.get('http://kapi.yika66.com:20153/login',
+                                    params=params)
+            res = response.text
+            print(res)
+            token = res.split('&')[0]
+            dba.save_data({'key': 'qwka', 'token': token, 'get_time': get_time()})
         return token
 
     def get_phone_list(self, num):
@@ -100,3 +108,7 @@ class Zanma(object):
 
 def get_time():
     return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # 现在
+
+
+if __name__ == '__main__':
+    print(qwka().get_access_token())

@@ -1,8 +1,8 @@
 import csv
 
+from getwool.modal import account
 import tablib
 import json
-from modal import account
 
 
 def set_file(file_name, in_data):
@@ -20,4 +20,3 @@ def get_file_by_name(file_name, key=''):
 
 def del_row_by_name(file_name, key=''):
     pass
-
