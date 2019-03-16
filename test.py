@@ -1,5 +1,4 @@
-from contrl.hit_mf import mf
-
+from contrl.hit_fy import fy
 
 if __name__ == '__main__':
-    print(mf().get_access_token())
+    fy().get_check_code(13568564122)

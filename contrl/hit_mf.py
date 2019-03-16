@@ -21,7 +21,7 @@ apiUrl = {
                  'param': ['name', 'psw'], 'method': 'post'}
 }
 
-
+xmid = '6898'
 class mf(object):
     def __del__(self):
         pass
@@ -46,7 +46,7 @@ class mf(object):
         request_url = 'http://39.108.53.15:9180/service.asmx/GetHM2Str'
         request_data = {
             'token': self.get_access_token(),  # (登陆令牌)
-            'xmid': '300217',  # (项目编码) 项目ID
+            'xmid': xmid,  # (项目编码) 项目ID
             'sl': num,  # (取号数量)
             'lx': 0,  # (号码类型)
             'a1': '',  # (省份)
@@ -77,7 +77,7 @@ class mf(object):
     def add_black_list(self, phone):
         data = {
             'token': self.get_access_token(),
-            'xmid': 300217,
+            'xmid': xmid,
             'hm': phone,
             'sf': 1
         }
