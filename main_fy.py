@@ -13,8 +13,8 @@ def get_time():
 if __name__ == '__main__':
     hitBoj = fy()
     accountDba = account.Phone()
+    exit(0)
     while True:
-        hitBoj.release_all()
         phone_list = hitBoj.get_phone_list(30)
         print(phone_list)
         platform = 'fy'

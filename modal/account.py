@@ -66,7 +66,6 @@ class Phone(object):
         except tablib.core.UnsupportedFormat:
             self.tableObj = tablib.Dataset()
         self.tableObj.headers = self.tableHead
-        pass
 
     def get_data_by_phone(self, phone):
         index = self.get_index_by_phone(phone)

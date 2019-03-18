@@ -29,7 +29,7 @@ class Zanma(object):
     def get_access_token(self):
         dba = account.Token()
         token = dba.get_data_by_key('zanma')
-        if token is None or len(token) < 30 or 1:
+        if token is None or len(token) < 30:
             response = requests.get('http://120.79.206.192:9180/service.asmx/UserLoginStr',
                                     params=self.get_params(['name', 'psw']))
             token = response.text

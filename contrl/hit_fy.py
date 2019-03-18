@@ -124,7 +124,9 @@ class fy(object):
 
     def get_check_code(self, phone):
         self.lock_phone(phone)
-        while True:
+        count = 0
+        while count < 20:
+            count += 1
             request_url = 'http://dkh.d1tm.com/service.asmx/GetYzm2Str'
             data = {
                 'token': self.get_access_token(),
@@ -137,8 +139,8 @@ class fy(object):
                 LogData().save_data({'phone': phone, 'status': res.text, 'update_time': get_time()})
                 exit(res.text)
             else:
-                time.sleep(1)
-
+                print("尝试接收%s号码的短信，第%s次" % (phone, count))
+                time.sleep(0.1)
 
 
 def get_time():
